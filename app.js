@@ -3,6 +3,7 @@ const from = document.querySelector(".form")
 const submitBtn = document.querySelector(".save-btn")
 const clearBtn = document.querySelector(".clear-btn")
 const unList = document.querySelector(".unorderList")
+const editBtn = document.querySelector(".edit-btn")
 
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
@@ -31,15 +32,20 @@ submitBtn.addEventListener("click", () => {
     render(notes)
 })
 
+// TODO: add button which can edit and delete the certain list item
 function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
         noteInput +=
-            `<li>${textInput[i]}</li>`;
+            `
+                <li>${textInput[i]}</li>
+                <div class="buttons">
+                    <button class="edit-btn">edit</button>
+                </div>
+            `;
     }
     unList.innerHTML = noteInput;
 }
-
 from.addEventListener("submit", (e) => {
     e.preventDefault();
     // console.log("enter pressed");
