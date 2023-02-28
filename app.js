@@ -3,6 +3,7 @@ const from = document.querySelector(".form")
 const submitBtn = document.querySelector(".save-btn")
 const clearBtn = document.querySelector(".clear-btn")
 const unList = document.querySelector(".unorderList")
+const list = unList.querySelectorAll('li')
 
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
@@ -35,9 +36,27 @@ function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
         noteInput +=
-            `<li>${textInput[i]}</li>`;
+            `
+            <li>${textInput[i]}
+                <div class="buttons">
+                    <button class="edit">edit</button>
+                    <button class="delete">delete</button>
+                </div>
+            </li>
+            `;
     }
     unList.innerHTML = noteInput;
+    const btns = document.querySelector(".buttons");
+    const editBtn = document.querySelector(".edit")
+    const deleteBtn = document.querySelector(".delete")
+
+    // FIXME: delete btn
+    deleteBtn.addEventListener("click", (e) => {
+        let parentList = e.target.parentElement.parentElement
+        if (parentList) {
+            unList.removeChild(parentList)
+        }
+    })
 }
 
 from.addEventListener("submit", (e) => {
