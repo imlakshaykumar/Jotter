@@ -45,15 +45,47 @@ function render(textInput) {
             </li>`;
     }
     unList.innerHTML = noteInput;
-    const btns = document.querySelector(".buttons");
-    const editBtn = document.querySelector(".edit-btn")
+    // const btns = document.querySelector(".buttons");
+    const editBtn = document.querySelectorAll(".edit-btn")
     const deleteBtn = document.querySelectorAll(".delete-btn")
+
+    editBtn.forEach(eBtn => {
+        eBtn.addEventListener("click", (e) => {
+            editListItem(e);
+        })
+    })
 
     deleteBtn.forEach(dBtn => {
         dBtn.addEventListener("click", (e) => {
             removeListItem(e);
         })
     })
+}
+
+function editListItem(e) {
+    const element = e.target.parentElement.parentElement;
+    if (element) {
+        const text = element.firstChild.textContent.trim();
+        // console.log(text);
+        let index = -1;
+        for (let i = 0; i < notes.length; i++) {
+            if (notes[i] === text) {
+                index = i;
+                break;
+            }
+        }
+        if (index >= 0) {
+
+            alert("Index of that element is: " + index)
+            // console.log(localStorage.getItem("notes", JSON.stringify(notes)));
+            console.log(notesFromLocalStorage[index]);
+            inputText.value = notes[index]
+
+            inputText.addEventListener("input", (e) => {
+
+            })
+        }
+    }
 }
 
 function removeListItem(e) {
@@ -83,7 +115,7 @@ function removeListItem(e) {
 
         if (index >= 0) {
             // alert("Index of that element is: " + index)
-            notes.splice(index, 1)
+            notes.splice(index, 1) // splice is used to delete from array/List
             localStorage.setItem("notes", JSON.stringify(notes))
             // alert("item deleted from localStorage") 
             console.log("item deleted from localStorage")
