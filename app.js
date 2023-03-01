@@ -3,7 +3,7 @@ const from = document.querySelector(".form")
 const submitBtn = document.querySelector(".save-btn")
 const clearBtn = document.querySelector(".clear-btn")
 const unList = document.querySelector(".unorderList")
-const editBtn = document.querySelector(".edit-btn")
+const list = unList.querySelectorAll('li')
 
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
@@ -18,6 +18,7 @@ clearBtn.addEventListener("click", () => {
     notes = []
     render(notes)
 })
+
 submitBtn.addEventListener("click", () => {
 
     // if value is empty, do note add value to the notes (localStorage)
@@ -32,19 +33,64 @@ submitBtn.addEventListener("click", () => {
     render(notes)
 })
 
-// TODO: add button which can edit and delete the certain list item
 function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
         noteInput +=
-            `
-                <li>${textInput[i]}</li>
+            `<li>${textInput[i]}
                 <div class="buttons">
-                    <button class="edit-btn">edit</button>
+                    <button class = "edit-btn">Edit</button>
+                    <button class = "delete-btn">Delete</button>
                 </div>
-            `;
+            </li>`;
     }
     unList.innerHTML = noteInput;
+    const btns = document.querySelector(".buttons");
+    const editBtn = document.querySelector(".edit-btn")
+    const deleteBtn = document.querySelectorAll(".delete-btn")
+
+    deleteBtn.forEach(dBtn => {
+        dBtn.addEventListener("click", (e) => {
+            removeListItem(e);
+        })
+    })
+}
+
+function removeListItem(e) {
+    const element = e.target.parentElement.parentElement;
+    if (element) {
+        const text = element.firstChild.textContent.trim();
+        // // console.log(text);
+        // console.log(element.firstChild.textContent.trim());
+        // // localStorage.removeItem(text)
+
+        // const textIndex = notesFromLocalStorage.findIndex((list) => list.id === text)
+        // if (textIndex !== -1) {
+        //     notesFromLocalStorage.splice(textIndex, 1);
+        //     localStorage.setItem('notesFromLocalStorage', JSON.stringify(notesFromLocalStorage))
+        //     localStorage.removeItem(text);
+        // }
+        // console.log(textIndex);
+        unList.removeChild(element)
+
+        let index = -1;
+        for (let i = 0; i < notes.length; i++) {
+            if (notes[i] === text) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index >= 0) {
+            // alert("Index of that element is: " + index)
+            notes.splice(index, 1)
+            localStorage.setItem("notes", JSON.stringify(notes))
+            // alert("item deleted from localStorage") 
+            console.log("item deleted from localStorage")
+        } else {
+            alert("Element not found")
+        }
+    }
 }
 from.addEventListener("submit", (e) => {
     e.preventDefault();
