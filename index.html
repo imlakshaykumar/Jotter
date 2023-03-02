@@ -6,19 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jotter</title>
+    <script src="https://kit.fontawesome.com/406b7154e5.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <form class="form">
         <div class="main-div">
-            <input type="text" name="text" id="input-text">
-            <button type="" class="save-btn">Save</button>
-            <button type="" class="clear-btn">Clear</button>
-            <ul class="unorderList">
-
-            </ul>
-
+            <input type="text" name="text" id="input-text" placeholder="Enter task">
+            <button type="" class="save-btn">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            <ul class="unorderList"></ul>
+            <div class="clear-btn-div">
+                <button type="" class="clear-btn">Clear items</button>
+            </div>
         </div>
     </form>
     <script src="app.js"></script>
