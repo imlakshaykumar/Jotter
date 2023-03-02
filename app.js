@@ -1,3 +1,5 @@
+// TODO: if no item is present, Hide the clear button
+
 const inputText = document.querySelector("#input-text")
 const from = document.querySelector(".form")
 const submitBtn = document.querySelector(".save-btn")
@@ -24,6 +26,7 @@ submitBtn.addEventListener("click", () => {
     // if value is empty, do note add value to the notes (localStorage)
     if (inputText.value === "") {
         console.log("empty value");
+
         // alert("Enter value first")
         return;
     }
@@ -39,8 +42,12 @@ function render(textInput) {
         noteInput +=
             `<li>${textInput[i]}
                 <div class="buttons">
-                    <button class = "edit-btn">Edit</button>
-                    <button class = "delete-btn">Delete</button>
+                    <button class = "edit-btn">
+                        <i class="fa-solid fa-file-pen"></i>
+                    </button>
+                    <button class = "delete-btn">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
                 </div>
             </li>`;
     }
@@ -89,7 +96,8 @@ function editListItem(e) {
 }
 
 function removeListItem(e) {
-    const element = e.target.parentElement.parentElement;
+    const element = e.target.parentElement.parentElement.parentElement;
+    // console.log(element);
     if (element) {
         const text = element.firstChild.textContent.trim();
         // // console.log(text);
