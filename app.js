@@ -4,6 +4,7 @@ const inputText = document.querySelector("#input-text")
 const from = document.querySelector(".form")
 const submitBtn = document.querySelector(".save-btn")
 const clearBtn = document.querySelector(".clear-btn")
+const clearBtnDiv = document.querySelector(".clear-btn-div")
 const unList = document.querySelector(".unorderList")
 const list = unList.querySelectorAll('li')
 
@@ -67,6 +68,17 @@ function render(textInput) {
             removeListItem(e);
         })
     })
+}
+
+// FIXME: 
+//function for clear button, check if it is working or not
+
+if (!(localStorage.getItem("notes").length === 0)) {
+    clearBtnDiv.style.display = "block"
+    // clearBtn.style.display = "block"
+} else {
+    clearBtnDiv.style.display = "none";
+    // clearBtn.style.display = "none";
 }
 
 function editListItem(e) {

@@ -119,3 +119,12 @@
 .clear-btn:hover {
     color: #0c0c0c;
 }
+
+/* clear button display: none default */
+.clear-btn-div{
+    display: none;
+}
+/* 
+.clear-btn{
+    display: none;
+} */
