@@ -1,5 +1,3 @@
-// TODO: if no item is present, Hide the clear button
-
 const inputText = document.querySelector("#input-text")
 const from = document.querySelector(".form")
 const submitBtn = document.querySelector(".save-btn")
@@ -68,17 +66,6 @@ function render(textInput) {
             removeListItem(e);
         })
     })
-}
-
-// FIXME: 
-//function for clear button, check if it is working or not
-
-if (!(localStorage.getItem("notes").length === 0)) {
-    clearBtnDiv.style.display = "block"
-    // clearBtn.style.display = "block"
-} else {
-    clearBtnDiv.style.display = "none";
-    // clearBtn.style.display = "none";
 }
 
 function editListItem(e) {
