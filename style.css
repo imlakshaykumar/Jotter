@@ -37,6 +37,7 @@
     margin-left: 10px;
     font-size: 27px;
     border: none;
+    cursor: pointer;
 }
 
 .unorderList {
@@ -119,12 +120,3 @@
 .clear-btn:hover {
     color: #0c0c0c;
 }
-
-/* clear button display: none default */
-.clear-btn-div{
-    display: none;
-}
-/* 
-.clear-btn{
-    display: none;
-} */
