@@ -4,7 +4,6 @@ const submitBtn = document.querySelector(".save-btn")
 const clearBtn = document.querySelector(".clear-btn")
 const clearBtnDiv = document.querySelector(".clear-btn-div")
 const unList = document.querySelector(".unorderList")
-const list = unList.querySelectorAll('li')
 
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
@@ -39,7 +38,7 @@ function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
         noteInput +=
-            `<li>${textInput[i]}
+            `<li data-id="${i + 1}">${textInput[i]}
                 <div class="buttons">
                     <button class = "edit-btn">
                         <i class="fa-solid fa-file-pen"></i>
@@ -69,66 +68,135 @@ function render(textInput) {
 }
 
 function editListItem(e) {
-    const element = e.target.parentElement.parentElement;
+    const element = e.target.closest('li[data-id')
+    // console.log(element);
+
+    // const tasklist = document.querySelectorAll('li');
+    // console.log(taskList);
+
     if (element) {
-        const text = element.firstChild.textContent.trim();
-        // console.log(text);
-        let index = -1;
-        for (let i = 0; i < notes.length; i++) {
-            if (notes[i] === text) {
-                index = i;
-                break;
-            }
-        }
+        const dataID = element.getAttribute('data-id')
+        // console.log(dataID);
+
+        let textOfElement = element.textContent.trim();
+        // console.log(`${textOfElement} ${dataID}`);
+
+        const taskList = Array.from(document.querySelectorAll('li'))
+
+        const index = taskList.findIndex(
+            (item) =>
+                item.getAttribute('data-id') == dataID &&
+                item.textContent.trim() === textOfElement
+        );
+
+        console.log(`index: ${index}, textContent: ${textOfElement}`);
         if (index >= 0) {
-
-            alert("Index of that element is: " + index)
-            // console.log(localStorage.getItem("notes", JSON.stringify(notes)));
-            console.log(notesFromLocalStorage[index]);
-            inputText.value = notes[index]
-
-            inputText.addEventListener("input", (e) => {
-
-            })
+            inputText.value = textOfElement
+            inputText.addEventListener('input', (e) => {
+                const newText = e.target.value;
+                // console.log(newText);
+                taskList[index].firstChild.textContent = newText
+                // console.log(textOfElement);
+            });
         }
+
+        // let dataIndex = -1;
+        // let index = -1;
+        // tasklist.forEach(item => {
+        //     // console.log(item)
+        //     if (item.getAttribute('data-id') === dataID) {
+        //         // console.log(`${dataID}`);
+        //         dataIndex = dataID;
+        //         // console.log(item);
+        //     }
+        // })
+        // for (let i = 0; i < tasklist.length; i++) {
+        //     if (tasklist[i].textContent.trim() === textOfElement) {
+        //         if (tasklist[i].getAttribute('data-id') === dataIndex) {
+        //             index = i;
+        //         } else {
+        //             continue;
+        //         }
+        //     }
+        // }
+        // console.log(index);
+
+
+
+
+        // if (index >= 0 && dataIndex > 0) {
+        //     inputText.value = tasklist[index].textContent.trim();
+        //     let newText = "";
+        //     inputText.addEventListener('input', () => {
+        //         newText = inputText.value.trim();
+        //         console.log(newText);
+        //     })
+        //     if (newText !== null && newText.trim() !== "") {
+        //         tasklist[index].firstChild.textContent = newText.trim();
+        //     }
+        // }
+        // console.log(index);
+        // console.log(dataIndex);
+        // if (index >= 0 && dataIndex > 0) {
+        //     const newText = prompt("Enter new text for this task:", textOfElement);
+        //     if (newText !== null && newText.trim() !== "") {
+        //         tasklist[index].firstChild.textContent = newText.trim();
+        //     }
+        // }
     }
 }
 
 function removeListItem(e) {
-    const element = e.target.parentElement.parentElement.parentElement;
+
+    const element = e.target.closest('li[data-id]');
+    const tasklist = document.querySelectorAll('li')
     // console.log(element);
+
     if (element) {
-        const text = element.firstChild.textContent.trim();
-        // // console.log(text);
-        // console.log(element.firstChild.textContent.trim());
-        // // localStorage.removeItem(text)
+        const dataID = element.getAttribute('data-id')
+        // console.log(dataID);
+        const textOfElement = element.textContent.trim();
+        // console.log(`${textOfElement} ${dataID}`);
 
-        // const textIndex = notesFromLocalStorage.findIndex((list) => list.id === text)
-        // if (textIndex !== -1) {
-        //     notesFromLocalStorage.splice(textIndex, 1);
-        //     localStorage.setItem('notesFromLocalStorage', JSON.stringify(notesFromLocalStorage))
-        //     localStorage.removeItem(text);
+        const taskList = Array.from(document.querySelectorAll('li'))
+
+        const index = taskList.findIndex(
+            (item) =>
+                item.getAttribute('data-id') == dataID &&
+                item.textContent.trim() === textOfElement
+        );
+
+        // let dataIndex = -1;
+        // let index = -1;
+        // tasklist.forEach(item => {
+        //     // console.log(item)
+        //     if (item.getAttribute('data-id') === dataID) {
+        //         // console.log(`${dataID}`);
+        //         dataIndex = dataID;
+        //         // console.log(item);
+        //     }
+        // })
+        // for (let i = 0; i < tasklist.length; i++) {
+        //     // const element = array[i];
+        //     if (tasklist[i].textContent.trim() === textOfElement) {
+        //         if (tasklist[i].getAttribute('data-id') === dataIndex) {
+        //             index = i;
+        //         } else {
+        //             continue;
+        //         }
+        //     }
         // }
-        // console.log(textIndex);
+        // console.log(index);
+        // console.log(dataIndex);
         unList.removeChild(element)
-
-        let index = -1;
-        for (let i = 0; i < notes.length; i++) {
-            if (notes[i] === text) {
-                index = i;
-                break;
-            }
-        }
-
         if (index >= 0) {
-            // alert("Index of that element is: " + index)
-            notes.splice(index, 1) // splice is used to delete from array/List
+            notes.splice(index, 1)
             localStorage.setItem("notes", JSON.stringify(notes))
-            // alert("item deleted from localStorage") 
-            console.log("item deleted from localStorage")
+            console.log(`deleted at index: ${index}`);
         } else {
-            alert("Element not found")
+            console.log("item not found");
         }
+
     }
 }
 from.addEventListener("submit", (e) => {
