@@ -12,52 +12,6 @@ let index = 0;
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
 
-if (notesFromLocalStorage) {
-    notes = notesFromLocalStorage;
-    render(notes)
-}
-
-clearBtn.addEventListener("click", () => {
-    localStorage.clear();
-    notes = []
-    render(notes)
-})
-
-submitBtn.addEventListener("click", () => {
-
-    // if value is empty, do note add value to the notes (localStorage)
-    if (editButton) {
-        // console.log("edit button");
-        console.log(`new value: ${newTextValue}`);
-        // console.log(index);
-
-        notes.map((item, i) => {
-            if (index === i) {
-                // console.log(notes.indexOf(item)); //false
-                // console.log(`i: ${i} and index: ${index}`);
-                // item = newTextValue
-                console.log(item);
-            }
-        })
-        console.log(notes);
-
-        index = 0;
-        inputText.value = "";
-        editButton = false;
-    } else {
-        if (inputText.value === "") {
-            console.log("empty value");
-            // alert("Enter value first")
-            return;
-        }
-        notes.push(inputText.value)
-        inputText.value = "";
-        localStorage.setItem("notes", JSON.stringify(notes))
-        render(notes)
-    }
-
-})
-
 function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
@@ -78,6 +32,8 @@ function render(textInput) {
     const editBtn = document.querySelectorAll(".edit-btn")
     const deleteBtn = document.querySelectorAll(".delete-btn")
 
+    // console.log(unList.childNodes);
+
     editBtn.forEach(eBtn => {
         eBtn.addEventListener("click", (e) => {
             editListItem(e);
@@ -89,6 +45,11 @@ function render(textInput) {
             removeListItem(e);
         })
     })
+}
+
+if (notesFromLocalStorage) {
+    notes = notesFromLocalStorage;
+    render(notes)
 }
 
 function editListItem(e) {
@@ -147,36 +108,13 @@ function editListItem(e) {
         //     }
         // }
         // console.log(index);
-
-
-
-
-        // if (index >= 0 && dataIndex > 0) {
-        //     inputText.value = tasklist[index].textContent.trim();
-        //     let newText = "";
-        //     inputText.addEventListener('input', () => {
-        //         newText = inputText.value.trim();
-        //         console.log(newText);
-        //     })
-        //     if (newText !== null && newText.trim() !== "") {
-        //         tasklist[index].firstChild.textContent = newText.trim();
-        //     }
-        // }
-        // console.log(index);
-        // console.log(dataIndex);
-        // if (index >= 0 && dataIndex > 0) {
-        //     const newText = prompt("Enter new text for this task:", textOfElement);
-        //     if (newText !== null && newText.trim() !== "") {
-        //         tasklist[index].firstChild.textContent = newText.trim();
-        //     }
-        // }
     }
 }
 
 function removeListItem(e) {
 
     const element = e.target.closest('li[data-id]');
-    const tasklist = document.querySelectorAll('li')
+    // const tasklist = document.querySelectorAll('li')
     // console.log(element);
 
     if (element) {
@@ -226,7 +164,58 @@ function removeListItem(e) {
 
     }
 }
+
+submitBtn.addEventListener("click", () => {
+    // if value is empty, do note add value to the notes (localStorage)
+    if (editButton) {
+        // console.log("edit button");
+        console.log(`new value: ${newTextValue}`);
+        // console.log(index);
+        notes = notes.map((item, i) => {
+            if (index === i) {
+                // console.log(notes.indexOf(item)); //false
+                // console.log(`i: ${i} and index: ${index}`);
+                // item = newTextValue
+                // console.log(item);
+                return newTextValue
+            }
+            return item;
+        })
+        // console.log(notes);
+        render(notes);
+        localStorage.setItem("notes", JSON.stringify(notes))
+        index = 0;
+        inputText.value = "";
+        editButton = false;
+    } else {
+        if (inputText.value === "") {
+            console.log("empty value");
+            // alert("Enter value first")
+            return;
+        }
+        notes.push(inputText.value)
+        inputText.value = "";
+        localStorage.setItem("notes", JSON.stringify(notes))
+        render(notes)
+    }
+
+})
+
+clearBtn.addEventListener("click", () => {
+    localStorage.clear();
+    notes = []
+    render(notes)
+})
+
 from.addEventListener("submit", (e) => {
     e.preventDefault();
     // console.log("enter pressed");
+    if (editButton) {
+        // console.log("edit button: Visible");
+        submitBtn.classList.add("show-main-btn")
+    } else {
+        // console.log("add button: visible");
+        submitBtn.classList.remove("show-main-btn")
+    }
 })
+
