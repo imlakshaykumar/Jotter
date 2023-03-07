@@ -12,6 +12,8 @@ let index = 0;
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
 
+render(notes)
+
 function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
@@ -33,6 +35,12 @@ function render(textInput) {
     const deleteBtn = document.querySelectorAll(".delete-btn")
 
     // console.log(unList.childNodes);
+    if (notes.length === 0 || localStorage.getItem("notes") === null) {
+        clearBtnDiv.style.display = "none"
+        localStorage.clear()
+    } else {
+        clearBtnDiv.style.display = "block"
+    }
 
     editBtn.forEach(eBtn => {
         eBtn.addEventListener("click", (e) => {
