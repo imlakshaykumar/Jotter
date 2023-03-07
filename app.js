@@ -202,7 +202,8 @@ submitBtn.addEventListener("click", () => {
                 // item = newTextValue
                 // console.log(item);
                 if (newTextValue === "") {
-                    alert("plz enter value first")
+                    // alert("plz enter changed value first")
+                    return inputText.value;
                 } else {
                     return newTextValue
                 }
