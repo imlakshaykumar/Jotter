@@ -136,3 +136,7 @@ li:first-child {
 .show-main-btn .main-save-btn {
     display: none;
 }
+
+.clear-btn-div {
+    display: none;
+}
