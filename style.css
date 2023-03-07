@@ -124,3 +124,15 @@
 li:first-child {
     background-color: red;
 }
+
+.main-edit-btn {
+    display: none;
+}
+
+.show-main-btn .main-edit-btn {
+    display: block;
+}
+
+.show-main-btn .main-save-btn {
+    display: none;
+}
