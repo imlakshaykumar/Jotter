@@ -5,6 +5,10 @@ const clearBtn = document.querySelector(".clear-btn")
 const clearBtnDiv = document.querySelector(".clear-btn-div")
 const unList = document.querySelector(".unorderList")
 
+let editButton = false;
+let newTextValue = "";
+let index = 0;
+
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
 
@@ -22,16 +26,36 @@ clearBtn.addEventListener("click", () => {
 submitBtn.addEventListener("click", () => {
 
     // if value is empty, do note add value to the notes (localStorage)
-    if (inputText.value === "") {
-        console.log("empty value");
+    if (editButton) {
+        // console.log("edit button");
+        console.log(`new value: ${newTextValue}`);
+        // console.log(index);
 
-        // alert("Enter value first")
-        return;
+        notes.map((item, i) => {
+            if (index === i) {
+                // console.log(notes.indexOf(item)); //false
+                // console.log(`i: ${i} and index: ${index}`);
+                // item = newTextValue
+                console.log(item);
+            }
+        })
+        console.log(notes);
+
+        index = 0;
+        inputText.value = "";
+        editButton = false;
+    } else {
+        if (inputText.value === "") {
+            console.log("empty value");
+            // alert("Enter value first")
+            return;
+        }
+        notes.push(inputText.value)
+        inputText.value = "";
+        localStorage.setItem("notes", JSON.stringify(notes))
+        render(notes)
     }
-    notes.push(inputText.value)
-    inputText.value = "";
-    localStorage.setItem("notes", JSON.stringify(notes))
-    render(notes)
+
 })
 
 function render(textInput) {
@@ -68,6 +92,7 @@ function render(textInput) {
 }
 
 function editListItem(e) {
+    editButton = true;
     const element = e.target.closest('li[data-id')
     // console.log(element);
 
@@ -83,7 +108,7 @@ function editListItem(e) {
 
         const taskList = Array.from(document.querySelectorAll('li'))
 
-        const index = taskList.findIndex(
+        index = taskList.findIndex(
             (item) =>
                 item.getAttribute('data-id') == dataID &&
                 item.textContent.trim() === textOfElement
@@ -95,10 +120,12 @@ function editListItem(e) {
             inputText.addEventListener('input', (e) => {
                 const newText = e.target.value;
                 // console.log(newText);
-                taskList[index].firstChild.textContent = newText
+                // taskList[index].firstChild.textContent = newText
                 // console.log(textOfElement);
+                newTextValue = newText;
             });
         }
+        console.log(index);
 
         // let dataIndex = -1;
         // let index = -1;
@@ -160,7 +187,7 @@ function removeListItem(e) {
 
         const taskList = Array.from(document.querySelectorAll('li'))
 
-        const index = taskList.findIndex(
+        index = taskList.findIndex(
             (item) =>
                 item.getAttribute('data-id') == dataID &&
                 item.textContent.trim() === textOfElement
