@@ -12,7 +12,25 @@ let index = 0;
 let notes = []
 const notesFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
 
-render(notes)
+//check for null, if null hide the clear button
+function checkNull() {
+    if (notes.length === 0 || localStorage.getItem("notes") === null) {
+        clearBtnDiv.style.display = "none"
+        localStorage.clear()
+    } else {
+        clearBtnDiv.style.display = "block"
+    }
+}
+
+function checkEditActive() {
+    if (editButton) {
+        // console.log("edit button: Visible");
+        submitBtn.classList.add("show-main-btn")
+    } else {
+        // console.log("add button: visible");
+        submitBtn.classList.remove("show-main-btn")
+    }
+}
 
 function render(textInput) {
     let noteInput = "";
@@ -35,13 +53,8 @@ function render(textInput) {
     const deleteBtn = document.querySelectorAll(".delete-btn")
 
     // console.log(unList.childNodes);
-    if (notes.length === 0 || localStorage.getItem("notes") === null) {
-        clearBtnDiv.style.display = "none"
-        localStorage.clear()
-    } else {
-        clearBtnDiv.style.display = "block"
-    }
 
+    // check for null, if null hide the clear item button
     editBtn.forEach(eBtn => {
         eBtn.addEventListener("click", (e) => {
             editListItem(e);
@@ -53,6 +66,7 @@ function render(textInput) {
             removeListItem(e);
         })
     })
+    checkNull();
 }
 
 if (notesFromLocalStorage) {
@@ -117,6 +131,7 @@ function editListItem(e) {
         // }
         // console.log(index);
     }
+    render(notes)
 }
 
 function removeListItem(e) {
@@ -169,8 +184,8 @@ function removeListItem(e) {
         } else {
             console.log("item not found");
         }
-
     }
+    render(notes)
 }
 
 submitBtn.addEventListener("click", () => {
@@ -185,7 +200,11 @@ submitBtn.addEventListener("click", () => {
                 // console.log(`i: ${i} and index: ${index}`);
                 // item = newTextValue
                 // console.log(item);
-                return newTextValue
+                if (newTextValue === "") {
+                    alert("plz enter value first")
+                } else {
+                    return newTextValue
+                }
             }
             return item;
         })
@@ -206,7 +225,6 @@ submitBtn.addEventListener("click", () => {
         localStorage.setItem("notes", JSON.stringify(notes))
         render(notes)
     }
-
 })
 
 clearBtn.addEventListener("click", () => {
@@ -218,12 +236,5 @@ clearBtn.addEventListener("click", () => {
 from.addEventListener("submit", (e) => {
     e.preventDefault();
     // console.log("enter pressed");
-    if (editButton) {
-        // console.log("edit button: Visible");
-        submitBtn.classList.add("show-main-btn")
-    } else {
-        // console.log("add button: visible");
-        submitBtn.classList.remove("show-main-btn")
-    }
 })
 
