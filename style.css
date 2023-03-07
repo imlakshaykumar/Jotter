@@ -120,3 +120,7 @@
 .clear-btn:hover {
     color: #0c0c0c;
 }
+
+li:first-child {
+    background-color: red;
+}
