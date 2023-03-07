@@ -1,3 +1,7 @@
+body {
+    background-color: #222831;
+}
+
 .form {
     /* border: 1px solid black; */
     /* max-width: 500px; */
@@ -18,26 +22,32 @@
     /* max-width: fit-content; */
     margin-top: 100px;
     max-height: 400px;
+    background-color: #393E46;
 }
 
 #input-text {
     padding: 7px 2px;
     border: none;
+    background: transparent;
     border-bottom: 1px solid black;
     outline: none;
     font-size: 18px;
     /* background-color: #222; */
     width: 80%;
-    /* color: #fff; */
+    color: #EEEEEE;
 }
 
 .save-btn {
-    padding: 5px;
+    position: relative;
+    top: 2px;
+    padding: 5px 10px;
     margin: 0;
-    margin-left: 10px;
+    margin-left: 5px;
     font-size: 27px;
     border: none;
     cursor: pointer;
+    background-color: #424851;
+    /* border: 1px solid black; */
 }
 
 .unorderList {
@@ -80,7 +90,7 @@
     /* margin-bottom: 20px; */
     margin-top: 20px;
     padding: 0.5rem 1rem 0.5rem 1.3rem;
-    background-color: rgb(234, 235, 235);
+    background-color: #00ADB5;
     border-radius: 5px;
 }
 
@@ -92,7 +102,7 @@
     font-size: 0.8rem;
     border: none;
     background: transparent;
-    color: #757373;
+    color: #393E46;
 }
 
 .edit-btn:hover,
@@ -113,16 +123,13 @@
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    color: #646060;
+    color: #EEEEEE;
     background: transparent;
 }
 
 .clear-btn:hover {
-    color: #0c0c0c;
-}
-
-li:first-child {
-    background-color: red;
+    color: #93c8cb;
+    transform: scale(1.05);
 }
 
 .main-edit-btn {
