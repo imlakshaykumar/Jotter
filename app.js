@@ -22,16 +22,6 @@ function checkNull() {
     }
 }
 
-function checkEditActive() {
-    if (editButton) {
-        // console.log("edit button: Visible");
-        submitBtn.classList.add("show-main-btn")
-    } else {
-        // console.log("add button: visible");
-        submitBtn.classList.remove("show-main-btn")
-    }
-}
-
 function render(textInput) {
     let noteInput = "";
     for (let i = 0; i < textInput.length; i++) {
@@ -55,6 +45,7 @@ function render(textInput) {
     // console.log(unList.childNodes);
 
     // check for null, if null hide the clear item button
+    checkEdit()
     editBtn.forEach(eBtn => {
         eBtn.addEventListener("click", (e) => {
             editListItem(e);
@@ -72,6 +63,16 @@ function render(textInput) {
 if (notesFromLocalStorage) {
     notes = notesFromLocalStorage;
     render(notes)
+}
+
+function checkEdit() {
+    if (editButton) {
+        // console.log("edit button: Visible");
+        submitBtn.classList.add("show-main-btn")
+    } else {
+        // console.log("add button: visible");
+        submitBtn.classList.remove("show-main-btn")
+    }
 }
 
 function editListItem(e) {
@@ -235,6 +236,7 @@ clearBtn.addEventListener("click", () => {
 
 from.addEventListener("submit", (e) => {
     e.preventDefault();
+    checkEdit()
     // console.log("enter pressed");
 })
 
